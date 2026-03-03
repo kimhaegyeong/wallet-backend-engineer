@@ -207,7 +207,7 @@
          - LockAcquisitionTimeoutException → 503
          - Exception → 500
 
-[ ] 4-5. Request DTO 검증 (@Valid)
+[x] 4-5. Request DTO 검증 (@Valid)
          - amount: @NotNull, @Min(1) "출금액은 1원 이상이어야 합니다."
          - transactionId: @NotBlank, @Pattern(regexp = "^TXN_[a-fA-F0-9]{32}$")
            형식 오류 시 400 + INVALID_TRANSACTION_ID_FORMAT 반환

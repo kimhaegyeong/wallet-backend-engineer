@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -112,6 +113,17 @@ public class GlobalExceptionHandler {
 
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                 .body(ApiResponse.error(errorResponse));
+        }
+
+        /**
+         * 날짜 파싱 실패 시 (400) - ISO 8601 + Offset 형식 오류
+         */
+        @ExceptionHandler(DateTimeParseException.class)
+        public ResponseEntity<ApiResponse<Void>> handleDateTimeParseException(DateTimeParseException e) {
+                log.warn("Date parsing failed: {}", e.getMessage());
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                .body(ApiResponse.error(ErrorResponse.of("INVALID_PARAMETER",
+                                                "날짜 형식이 유효하지 않습니다. (ISO 8601 형식 필요)")));
         }
 
         /**

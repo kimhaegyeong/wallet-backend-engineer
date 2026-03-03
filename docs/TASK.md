@@ -150,7 +150,7 @@
               → DuplicateKeyException 발생 시: catch → 멱등 응답 반환 (2차 방어)
            5. 결과 반환
 
-[ ] 3-2. WalletQueryService.getTransactions() 구현
+[x] 3-2. WalletQueryService.getTransactions() 구현
          처리 순서:
            1. Wallet 존재 여부 선검증 (없으면 WalletNotFoundException)
            2. 날짜 파라미터 검증

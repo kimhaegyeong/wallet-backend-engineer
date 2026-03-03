@@ -14,11 +14,11 @@ import lombok.Setter;
 @Setter
 public class WithdrawalRequest {
 
-    @NotBlank(message = "Transaction ID is required.")
-    @Pattern(regexp = "^TXN_[a-fA-F0-9]{32}$", message = "Invalid transaction ID format.")
+    @NotBlank(message = "트랜잭션 ID는 필수입니다.")
+    @Pattern(regexp = "^TXN_[a-fA-F0-9]{32}$", message = "트랜잭션 ID 형식이 유효하지 않습니다.")
     private String transactionId;
 
-    @NotNull(message = "Withdrawal amount is required.")
-    @Min(value = 1, message = "Withdrawal amount must be at least 1.")
+    @NotNull(message = "출금 금액은 필수입니다.")
+    @Min(value = 1, message = "출금 금액은 1원 이상이어야 합니다.")
     private Long amount;
 }

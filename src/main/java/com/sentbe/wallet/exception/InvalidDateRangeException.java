@@ -2,6 +2,6 @@ package com.sentbe.wallet.exception;
 
 public class InvalidDateRangeException extends RuntimeException {
     public InvalidDateRangeException() {
-        super("Start date must be before or equal to end date.");
+        super("시작일은 종료일보다 빨라야 합니다.");
     }
 }

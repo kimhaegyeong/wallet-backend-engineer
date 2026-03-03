@@ -8,7 +8,7 @@ public class InsufficientBalanceException extends RuntimeException {
     private final long requestedAmount;
 
     public InsufficientBalanceException(long currentBalance, long requestedAmount) {
-        super(String.format("Insufficient balance. Current: %d, Requested: %d", currentBalance, requestedAmount));
+        super(String.format("잔액이 부족합니다. (현재 잔액: %d, 요청 금액: %d)", currentBalance, requestedAmount));
         this.currentBalance = currentBalance;
         this.requestedAmount = requestedAmount;
     }

@@ -20,13 +20,13 @@
 > 목표: 로컬에서 빌드 및 Docker 기동이 되는 뼈대 구성
 
 ```
-[ ] 0-1. Spring Initializr로 프로젝트 생성
+[x] 0-1. Spring Initializr로 프로젝트 생성
          - Spring Boot 3.x, Java 17, Gradle
          - 의존성: Spring Web, Spring Data JPA, MySQL Driver,
                    Flyway, Validation, Actuator, Lombok,
                    springdoc-openapi-starter-webmvc-ui:2.x
 
-[ ] 0-2. docker-compose.yml 작성
+[x] 0-2. docker-compose.yml 작성
          - services: mysql:8.0, redis:7-alpine
          - mysql: 환경변수, 볼륨(init.sql 마운트), healthcheck
            * environment: TZ=UTC
@@ -35,7 +35,7 @@
          - redis: 포트 노출
          - app: depends_on(mysql healthy), 환경변수 주입
 
-[ ] 0-3. application.yml 작성
+[x] 0-3. application.yml 작성
          - datasource: MySQL 연결 정보 (환경변수 참조)
            * url 파라미터: ?serverTimezone=UTC&useLegacyDatetimeCode=false
            ※ JDBC 드라이버가 timezone 변환 시 UTC 기준으로 동작하도록 명시
@@ -54,9 +54,9 @@
          - app.transaction:
            * max-date-range-days: 90  (날짜 범위 최대 조회 기간 — 운영 중 조정 가능)
 
-[ ] 0-4. .gitignore, README 초안 추가
+[x] 0-4. .gitignore, README 초안 추가
 
-[ ] 0-5. 빌드 및 Docker 기동 확인
+[x] 0-5. 빌드 및 Docker 기동 확인
          ./gradlew build
          docker compose up -d
 ```
@@ -68,7 +68,7 @@
 > 목표: 테이블 자동 생성 및 테스트 데이터 삽입
 
 ```
-[ ] 1-1. Flyway DDL 작성: V1__init.sql
+[x] 1-1. Flyway DDL 작성: V1__init.sql
          - wallet 테이블 (wallet_id VARCHAR(32) PK, balance BIGINT,
                               created_at TIMESTAMP(6), updated_at TIMESTAMP(6))
            * wallet_id: UUID v4 하이픈 제거, 서버 자동 발급
@@ -81,13 +81,13 @@
            * withdrawal_date: TIMESTAMP(6) — UTC 저장, 응답 시 KST(+09:00) 변환
          - INDEX: idx_wallet_date (wallet_id, withdrawal_date)
 
-[ ] 1-2. 초기 데이터 삽입: data.sql (또는 V2__seed.sql)
+[x] 1-2. 초기 데이터 삽입: V2__seed.sql
          - 550e8400e29b41d4a716446655440000: 잔액 1,000,000원  (동시성 테스트용)
          - 6ba7b8109dad11d180b400c04fd430c8: 잔액   500,000원  (일반 테스트용)
          - 6ba7b8119dad11d180b400c04fd430c8: 잔액         0원  (잔액 부족 테스트용)
          ※ README.md의 테스트용 ID 목록 참고
 
-[ ] 1-3. 애플리케이션 기동 후 테이블 생성 확인
+[x] 1-3. 애플리케이션 기동 후 테이블 생성 확인
          docker exec -it sentbe-mysql mysql -u root -proot wallet_db -e "SHOW TABLES;"
 ```
 

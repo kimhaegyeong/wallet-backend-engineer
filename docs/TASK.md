@@ -196,7 +196,7 @@
          - @PageableDefault(size=20, sort="withdrawalDate", direction=DESC) Pageable
          - WalletQueryService.getTransactions(walletId, startDate, endDate, pageable) 호출
 
-[ ] 4-4. GlobalExceptionHandler 작성 (@RestControllerAdvice)
+[x] 4-4. GlobalExceptionHandler 작성 (@RestControllerAdvice)
          - WalletNotFoundException → 404
          - InsufficientBalanceException → 422
          - InvalidAmountException → 400

@@ -215,7 +215,7 @@
            OffsetDateTime.parse() 실패 → DateTimeParseException → 400 처리
            예시: "2026-01-01T00:00:00+09:00" (정상), "2026-01-01" (오류)
 
-[ ] 4-6. TimezoneConfig.java 작성
+[x] 4-6. TimezoneConfig.java 작성
          - @Configuration
          - @Value("${app.timezone.display}") displayTimezone 주입
          - Bean: Jackson2ObjectMapperBuilderCustomizer

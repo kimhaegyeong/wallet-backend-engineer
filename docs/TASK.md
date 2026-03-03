@@ -68,7 +68,7 @@
 > 목표: 테이블 자동 생성 및 테스트 데이터 삽입
 
 ```
-[ ] 1-1. Flyway DDL 작성: V1__init.sql
+[x] 1-1. Flyway DDL 작성: V1__init.sql
          - wallet 테이블 (wallet_id VARCHAR(32) PK, balance BIGINT,
                               created_at TIMESTAMP(6), updated_at TIMESTAMP(6))
            * wallet_id: UUID v4 하이픈 제거, 서버 자동 발급
@@ -81,13 +81,13 @@
            * withdrawal_date: TIMESTAMP(6) — UTC 저장, 응답 시 KST(+09:00) 변환
          - INDEX: idx_wallet_date (wallet_id, withdrawal_date)
 
-[ ] 1-2. 초기 데이터 삽입: data.sql (또는 V2__seed.sql)
+[x] 1-2. 초기 데이터 삽입: V2__seed.sql
          - 550e8400e29b41d4a716446655440000: 잔액 1,000,000원  (동시성 테스트용)
          - 6ba7b8109dad11d180b400c04fd430c8: 잔액   500,000원  (일반 테스트용)
          - 6ba7b8119dad11d180b400c04fd430c8: 잔액         0원  (잔액 부족 테스트용)
          ※ README.md의 테스트용 ID 목록 참고
 
-[ ] 1-3. 애플리케이션 기동 후 테이블 생성 확인
+[x] 1-3. 애플리케이션 기동 후 테이블 생성 확인
          docker exec -it sentbe-mysql mysql -u root -proot wallet_db -e "SHOW TABLES;"
 ```
 

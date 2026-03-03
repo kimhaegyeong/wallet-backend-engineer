@@ -178,7 +178,7 @@
 > 목표: RESTful 엔드포인트 노출
 
 ```
-[ ] 4-1. 공통 응답 래퍼 작성
+[x] 4-1. 공통 응답 래퍼 작성
          - ApiResponse<T> { success, idempotent, data, error }
          - ErrorResponse { code, message, ... }
 

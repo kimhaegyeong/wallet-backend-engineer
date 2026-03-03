@@ -98,7 +98,7 @@
 > 목표: JPA 엔티티와 레포지토리 레이어 구성
 
 ```
-[ ] 2-1. Wallet 엔티티 작성
+[x] 2-1. Wallet 엔티티 작성
          - @Entity, @Id
          - balance: Long 타입
          - createdAt, updatedAt: Instant 타입 (LocalDateTime 사용 금지)
@@ -107,7 +107,7 @@
          ※ @Version 미사용: 비관적 락(SELECT FOR UPDATE)이 동시성을 완전히 보장하므로
             낙관적 락과의 혼용은 불필요한 중복 (UPDATE 시 version 조건절 오버헤드 발생)
 
-[ ] 2-2. Transaction 엔티티 작성
+[x] 2-2. Transaction 엔티티 작성
          - @Entity, transactionId: @Column(unique=true, length=36)
          - transactionId 형식 검증: @Pattern(regexp = "^TXN_[a-fA-F0-9]{32}$")
          - withdrawalDate: Instant 타입 (LocalDateTime 사용 금지)
@@ -116,11 +116,11 @@
          - status: Enum (SUCCESS, FAILED, DUPLICATE)
          - responseSnapshot: JSON 컬럼 (String 또는 @Convert)
 
-[ ] 2-3. WalletRepository 작성
+[x] 2-3. WalletRepository 작성
          - findByIdWithLock(walletId): @Lock(PESSIMISTIC_WRITE) + @Query
            "SELECT w FROM Wallet w WHERE w.walletId = :walletId"
 
-[ ] 2-4. TransactionRepository 작성
+[x] 2-4. TransactionRepository 작성
          - findByTransactionId(transactionId): 멱등 체크용
          - findByWalletIdAndWithdrawalDateBetween(walletId, startDate, endDate, Pageable): 날짜 범위 조회용
            * startDate, endDate 타입: Instant (UTC 변환 후 전달)

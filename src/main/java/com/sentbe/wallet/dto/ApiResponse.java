@@ -1,6 +1,7 @@
 package com.sentbe.wallet.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,15 +18,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(description = "전역 공통 응답 포맷")
 public class ApiResponse<T> {
 
+    @Schema(description = "요청 성공 여부", example = "true")
     private boolean success;
 
     @Builder.Default
+    @Schema(description = "멱등성 보장 응답 여부 (중복 요청 시 true)", example = "false")
     private boolean idempotent = false;
 
+    @Schema(description = "응답 데이터")
     private T data;
 
+    @Schema(description = "에러 정보 (실패 시에만 포함)")
     private ErrorResponse error;
 
     /**

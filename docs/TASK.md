@@ -225,7 +225,7 @@
          - WalletApplication.java static 블록에 TimeZone.setDefault(UTC) 추가
            ※ JVM 전역 UTC 고정 — OS timezone 설정 의존 제거
 
-[ ] 4-7. Swagger (SpringDoc OpenAPI 3) 설정
+[x] 4-7. Swagger (SpringDoc OpenAPI 3) 설정
          - SwaggerConfig.java 작성
            * @OpenAPIDefinition — title, version, description 기재
            * @SecurityScheme — 향후 인증 확장 대비 (현재 과제는 미적용)

@@ -135,7 +135,7 @@
 > 목표: 동시성 제어 + 멱등성 보장 구현
 
 ```
-[ ] 3-1. WithdrawalService.withdraw() 구현
+[x] 3-1. WithdrawalService.withdraw() 구현
          트랜잭션 경계:
            @Transactional (전체를 하나의 트랜잭션으로 묶어 락 범위 보장)
 

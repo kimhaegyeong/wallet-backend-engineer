@@ -182,7 +182,7 @@
          - ApiResponse<T> { success, idempotent, data, error }
          - ErrorResponse { code, message, ... }
 
-[ ] 4-2. WithdrawalController 작성
+[x] 4-2. WithdrawalController 작성
          POST /api/v1/wallets/{walletId}/withdrawals
          - @PathVariable walletId
          - @RequestBody @Valid WithdrawalRequest

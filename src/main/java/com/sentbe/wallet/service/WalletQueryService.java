@@ -1,7 +1,5 @@
 package com.sentbe.wallet.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sentbe.wallet.domain.Transaction;
 import com.sentbe.wallet.dto.TransactionListResponse;
 import com.sentbe.wallet.dto.WithdrawalResponse;
@@ -30,7 +28,6 @@ public class WalletQueryService {
 
     private final WalletRepository walletRepository;
     private final TransactionRepository transactionRepository;
-    private final ObjectMapper objectMapper;
 
     @Value("${app.transaction.max-date-range-days:90}")
     private int maxDateRangeDays;
@@ -88,31 +85,14 @@ public class WalletQueryService {
     }
 
     private WithdrawalResponse convertToResponse(Transaction transaction) {
-        try {
-            // response_snapshot에 저장된 원본 응답 정보를 활용하거나 필드 직접 매핑
-            // 여기서는 snapshot을 파싱하여 기본 정보를 구성함
-            WithdrawalResponse snapshot = objectMapper.readValue(transaction.getResponseSnapshot(),
-                    WithdrawalResponse.class);
-            return WithdrawalResponse.builder()
-                    .transactionId(transaction.getTransactionId())
-                    .walletId(transaction.getWalletId())
-                    .withdrawalAmount(transaction.getWithdrawalAmount())
-                    .remainingBalance(transaction.getBalanceAfter())
-                    .status(transaction.getStatus())
-                    .withdrawalDate(transaction.getWithdrawalDate())
-                    .idempotent(false) // 조회 시에는 멱등 플래그 미의미
-                    .build();
-        } catch (JsonProcessingException e) {
-            log.error("Failed to parse transaction snapshot: {}", transaction.getTransactionId(), e);
-            // Snapshot 파싱 실패 시 기본 필드로 구성
-            return WithdrawalResponse.builder()
-                    .transactionId(transaction.getTransactionId())
-                    .walletId(transaction.getWalletId())
-                    .withdrawalAmount(transaction.getWithdrawalAmount())
-                    .remainingBalance(transaction.getBalanceAfter())
-                    .status(transaction.getStatus())
-                    .withdrawalDate(transaction.getWithdrawalDate())
-                    .build();
-        }
+        return WithdrawalResponse.builder()
+                .transactionId(transaction.getTransactionId())
+                .walletId(transaction.getWalletId())
+                .withdrawalAmount(transaction.getWithdrawalAmount())
+                .remainingBalance(transaction.getBalanceAfter())
+                .status(transaction.getStatus())
+                .withdrawalDate(transaction.getWithdrawalDate())
+                .idempotent(false) // 조회 시에는 멱등 플래그 미의미
+                .build();
     }
 }

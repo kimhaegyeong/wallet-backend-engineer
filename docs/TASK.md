@@ -162,7 +162,7 @@
            4. transactionRepository 날짜 범위 조회 (Instant 기준)
            5. Page<Transaction> → TransactionListResponse 변환 (응답은 KST 직렬화)
 
-[ ] 3-3. 예외 클래스 정의
+[x] 3-3. 예외 클래스 정의
          - WalletNotFoundException (404)
          - InsufficientBalanceException (422) — currentBalance, requestedAmount 포함
          - InvalidAmountException (400)

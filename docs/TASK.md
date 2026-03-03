@@ -188,7 +188,7 @@
          - @RequestBody @Valid WithdrawalRequest
          - WithdrawalService.withdraw() 호출 및 응답 반환
 
-[ ] 4-3. TransactionController 작성
+[x] 4-3. TransactionController 작성
          GET /api/v1/wallets/{walletId}/transactions
          - @PathVariable walletId
          - @RequestParam(required=false) String startDate  (ISO 8601 + offset)

@@ -20,13 +20,13 @@
 > 목표: 로컬에서 빌드 및 Docker 기동이 되는 뼈대 구성
 
 ```
-[ ] 0-1. Spring Initializr로 프로젝트 생성
+[x] 0-1. Spring Initializr로 프로젝트 생성
          - Spring Boot 3.x, Java 17, Gradle
          - 의존성: Spring Web, Spring Data JPA, MySQL Driver,
                    Flyway, Validation, Actuator, Lombok,
                    springdoc-openapi-starter-webmvc-ui:2.x
 
-[ ] 0-2. docker-compose.yml 작성
+[x] 0-2. docker-compose.yml 작성
          - services: mysql:8.0, redis:7-alpine
          - mysql: 환경변수, 볼륨(init.sql 마운트), healthcheck
            * environment: TZ=UTC
@@ -35,7 +35,7 @@
          - redis: 포트 노출
          - app: depends_on(mysql healthy), 환경변수 주입
 
-[ ] 0-3. application.yml 작성
+[x] 0-3. application.yml 작성
          - datasource: MySQL 연결 정보 (환경변수 참조)
            * url 파라미터: ?serverTimezone=UTC&useLegacyDatetimeCode=false
            ※ JDBC 드라이버가 timezone 변환 시 UTC 기준으로 동작하도록 명시
@@ -54,9 +54,9 @@
          - app.transaction:
            * max-date-range-days: 90  (날짜 범위 최대 조회 기간 — 운영 중 조정 가능)
 
-[ ] 0-4. .gitignore, README 초안 추가
+[x] 0-4. .gitignore, README 초안 추가
 
-[ ] 0-5. 빌드 및 Docker 기동 확인
+[x] 0-5. 빌드 및 Docker 기동 확인
          ./gradlew build
          docker compose up -d
 ```

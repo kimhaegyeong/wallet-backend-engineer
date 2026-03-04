@@ -120,4 +120,34 @@ public class WithdrawalService {
             throw new RuntimeException("Failed to serialize response snapshot", e);
         }
     }
+
+    /**
+     * 락 없이 출금을 시도하는 메서드 (A-3 제어 대조군 실험용)
+     * 이 메서드는 실제 운영 환경에서는 사용되지 않으며, 동시성 이슈 발생을 증명하기 위한 용도입니다.
+     */
+    @Transactional
+    public WithdrawalResponse withdrawWithoutLock(String walletId, WithdrawalRequest request) {
+        // 비관적 락 없이 일반 조회
+        Wallet wallet = walletRepository.findById(walletId)
+                .orElseThrow(() -> new WalletNotFoundException(walletId));
+
+        // 차감
+        wallet.withdraw(request.getAmount());
+
+        // 결과 저장
+        WithdrawalResponse response = buildResponse(walletId, request, wallet.getBalance(), TransactionStatus.SUCCESS,
+                false);
+        Transaction transaction = Transaction.builder()
+                .transactionId(request.getTransactionId())
+                .walletId(walletId)
+                .withdrawalAmount(request.getAmount())
+                .balanceAfter(wallet.getBalance())
+                .status(TransactionStatus.SUCCESS)
+                .responseSnapshot(toJson(response))
+                .withdrawalDate(Instant.now())
+                .build();
+        transactionRepository.save(transaction);
+
+        return response;
+    }
 }

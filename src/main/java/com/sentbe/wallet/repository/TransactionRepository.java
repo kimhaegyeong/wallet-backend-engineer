@@ -17,4 +17,12 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
      * @return 거래 내역 (Optional)
      */
     Optional<Transaction> findByTransactionId(String transactionId);
+
+    /**
+     * 특정 월렛의 모든 거래 내역을 조회합니다.
+     *
+     * @param walletId 월렛 ID
+     * @return 거래 내역 리스트
+     */
+    java.util.List<Transaction> findByWalletId(String walletId);
 }

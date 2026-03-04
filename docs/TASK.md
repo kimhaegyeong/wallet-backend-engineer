@@ -98,7 +98,7 @@
 > 목표: JPA 엔티티와 레포지토리 레이어 구성
 
 ```
-[ ] 2-1. Wallet 엔티티 작성
+[x] 2-1. Wallet 엔티티 작성
          - @Entity, @Id
          - balance: Long 타입
          - createdAt, updatedAt: Instant 타입 (LocalDateTime 사용 금지)
@@ -107,7 +107,7 @@
          ※ @Version 미사용: 비관적 락(SELECT FOR UPDATE)이 동시성을 완전히 보장하므로
             낙관적 락과의 혼용은 불필요한 중복 (UPDATE 시 version 조건절 오버헤드 발생)
 
-[ ] 2-2. Transaction 엔티티 작성
+[x] 2-2. Transaction 엔티티 작성
          - @Entity, transactionId: @Column(unique=true, length=36)
          - transactionId 형식 검증: @Pattern(regexp = "^TXN_[a-fA-F0-9]{32}$")
          - withdrawalDate: Instant 타입 (LocalDateTime 사용 금지)
@@ -116,11 +116,11 @@
          - status: Enum (SUCCESS, FAILED, DUPLICATE)
          - responseSnapshot: JSON 컬럼 (String 또는 @Convert)
 
-[ ] 2-3. WalletRepository 작성
+[x] 2-3. WalletRepository 작성
          - findByIdWithLock(walletId): @Lock(PESSIMISTIC_WRITE) + @Query
            "SELECT w FROM Wallet w WHERE w.walletId = :walletId"
 
-[ ] 2-4. TransactionRepository 작성
+[x] 2-4. TransactionRepository 작성
          - findByTransactionId(transactionId): 멱등 체크용
          - findByWalletIdAndWithdrawalDateBetween(walletId, startDate, endDate, Pageable): 날짜 범위 조회용
            * startDate, endDate 타입: Instant (UTC 변환 후 전달)
@@ -135,7 +135,7 @@
 > 목표: 동시성 제어 + 멱등성 보장 구현
 
 ```
-[ ] 3-1. WithdrawalService.withdraw() 구현
+[x] 3-1. WithdrawalService.withdraw() 구현
          트랜잭션 경계:
            @Transactional (전체를 하나의 트랜잭션으로 묶어 락 범위 보장)
 
@@ -150,7 +150,7 @@
               → DuplicateKeyException 발생 시: catch → 멱등 응답 반환 (2차 방어)
            5. 결과 반환
 
-[ ] 3-2. WalletQueryService.getTransactions() 구현
+[x] 3-2. WalletQueryService.getTransactions() 구현
          처리 순서:
            1. Wallet 존재 여부 선검증 (없으면 WalletNotFoundException)
            2. 날짜 파라미터 검증
@@ -162,7 +162,7 @@
            4. transactionRepository 날짜 범위 조회 (Instant 기준)
            5. Page<Transaction> → TransactionListResponse 변환 (응답은 KST 직렬화)
 
-[ ] 3-3. 예외 클래스 정의
+[x] 3-3. 예외 클래스 정의
          - WalletNotFoundException (404)
          - InsufficientBalanceException (422) — currentBalance, requestedAmount 포함
          - InvalidAmountException (400)
@@ -178,17 +178,17 @@
 > 목표: RESTful 엔드포인트 노출
 
 ```
-[ ] 4-1. 공통 응답 래퍼 작성
+[x] 4-1. 공통 응답 래퍼 작성
          - ApiResponse<T> { success, idempotent, data, error }
          - ErrorResponse { code, message, ... }
 
-[ ] 4-2. WithdrawalController 작성
+[x] 4-2. WithdrawalController 작성
          POST /api/v1/wallets/{walletId}/withdrawals
          - @PathVariable walletId
          - @RequestBody @Valid WithdrawalRequest
          - WithdrawalService.withdraw() 호출 및 응답 반환
 
-[ ] 4-3. TransactionController 작성
+[x] 4-3. TransactionController 작성
          GET /api/v1/wallets/{walletId}/transactions
          - @PathVariable walletId
          - @RequestParam(required=false) String startDate  (ISO 8601 + offset)
@@ -196,7 +196,7 @@
          - @PageableDefault(size=20, sort="withdrawalDate", direction=DESC) Pageable
          - WalletQueryService.getTransactions(walletId, startDate, endDate, pageable) 호출
 
-[ ] 4-4. GlobalExceptionHandler 작성 (@RestControllerAdvice)
+[x] 4-4. GlobalExceptionHandler 작성 (@RestControllerAdvice)
          - WalletNotFoundException → 404
          - InsufficientBalanceException → 422
          - InvalidAmountException → 400
@@ -207,7 +207,7 @@
          - LockAcquisitionTimeoutException → 503
          - Exception → 500
 
-[ ] 4-5. Request DTO 검증 (@Valid)
+[x] 4-5. Request DTO 검증 (@Valid)
          - amount: @NotNull, @Min(1) "출금액은 1원 이상이어야 합니다."
          - transactionId: @NotBlank, @Pattern(regexp = "^TXN_[a-fA-F0-9]{32}$")
            형식 오류 시 400 + INVALID_TRANSACTION_ID_FORMAT 반환
@@ -215,7 +215,7 @@
            OffsetDateTime.parse() 실패 → DateTimeParseException → 400 처리
            예시: "2026-01-01T00:00:00+09:00" (정상), "2026-01-01" (오류)
 
-[ ] 4-6. TimezoneConfig.java 작성
+[x] 4-6. TimezoneConfig.java 작성
          - @Configuration
          - @Value("${app.timezone.display}") displayTimezone 주입
          - Bean: Jackson2ObjectMapperBuilderCustomizer
@@ -225,7 +225,7 @@
          - WalletApplication.java static 블록에 TimeZone.setDefault(UTC) 추가
            ※ JVM 전역 UTC 고정 — OS timezone 설정 의존 제거
 
-[ ] 4-7. Swagger (SpringDoc OpenAPI 3) 설정
+[x] 4-7. Swagger (SpringDoc OpenAPI 3) 설정
          - SwaggerConfig.java 작성
            * @OpenAPIDefinition — title, version, description 기재
            * @SecurityScheme — 향후 인증 확장 대비 (현재 과제는 미적용)
